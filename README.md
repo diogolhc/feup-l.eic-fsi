@@ -1,9 +1,9 @@
 
 Breve descrição do grupo
 
-* Turno: [LM]XX
-* Grupo: YY
+* Turno: L06
+* Grupo: 02
 * Alunos:
-    - Aluno1 upZZZZZ 
-    - Aluno2 upZZZZZ
-    - Aluno3 upZZZZZ
+    - Diogo Luís Henriques Costa up201906731 
+    - Eunice Juliana Freitas Amorim up201904920
+    - Francisco José Barbosa Marques Colino up201905405
