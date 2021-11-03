@@ -23,8 +23,7 @@
 
 ## Ataques
 
-- Ataques bem sucedidos: The Crestron AM-100 firmware 1.6.0.2, Crestron AM-101 firmware 2.7.0.1, Barco wePresent WiPG-1000P firmware 2.3.0.10 etc.
-- Documentação de ataque https://www.fortiguard.com/encyclopedia/ips/47830
+- Ataques bem sucedidos: The Crestron AM-100 firmware 1.6.0.2, Crestron AM-101 firmware 2.7.0.1, Barco wePresent WiPG-1000P firmware 2.3.0.10 etc. (*Documentação de ataque* https://www.fortiguard.com/encyclopedia/ips/47830)
 - Potencial ataque de denial of service - com acesso como root pode-se impedir que o o dispositivo apresente a informação
 - Roubo de dados retransmitindo o que recebe para um endereço escolhido pelo atacante
-Injeção de spyware e outros malwares 
+- Injeção de spyware e outros malwares 
