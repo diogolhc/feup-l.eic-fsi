@@ -16,10 +16,8 @@
 
 ## Exploit
 
-- Código: https://www.exploit-db.com/exploits/47924
-- item2
-- item3
-- item4
+- OS command injection através de uma vulnerabilidade explorada com *HTTP request*
+- Automação através da plataforma METASPLOIT - https://www.exploit-db.com/exploits/47924
 
 ## Ataques
 
