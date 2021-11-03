@@ -9,13 +9,16 @@
 
 ## Catalogação
 
-- Autor: Jacob Baines - METASPLOIT
+- Autor: Jacob Baines - METASPLOIT, 30-04-2019
 - Severidade: 9.8/10 de acordo com NIST
+- Possíveis danos: divulgação total de informações, integridade do sistema comprometida, encerramento total do sistema
+- Modo de uso: baixa complexidade, não existem condições de acesso especiais ou circunstâncias atenuantes, autenticação não é 
 
 ## Exploit
 
 - OS command injection através de uma vulnerabilidade explorada com *HTTP request*
 - Automação através da plataforma METASPLOIT - https://www.exploit-db.com/exploits/47924
+- Alguns firmwares foram descontinuados e outros atualizados
 
 ## Ataques
 
