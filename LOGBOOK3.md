@@ -12,7 +12,7 @@
 - Autor: Jacob Baines - METASPLOIT, 30-04-2019
 - Severidade: 9.8/10 de acordo com NIST
 - Possíveis danos: divulgação total de informações, integridade do sistema comprometida, encerramento total do sistema
-- Modo de uso: baixa complexidade, não existem condições de acesso especiais ou circunstâncias atenuantes, autenticação não é 
+- Modo de uso: baixa complexidade, não existem condições de acesso especiais ou circunstâncias atenuantes, autenticação não é necessária
 
 ## Exploit
 
