@@ -12,7 +12,7 @@
 - Autor: Jacob Baines - METASPLOIT, 30-04-2019
 - Severidade: 9.8/10 de acordo com NIST
 - Possíveis danos: divulgação total de informações, integridade do sistema comprometida, encerramento total do sistema
-- Alguns firmwares foram descontinuados e outros atualizados
+- Como solução, alguns firmwares foram descontinuados e outros atualizados
 
 ## Exploit
 
