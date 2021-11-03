@@ -16,9 +16,9 @@
 
 ## Exploit
 
-- Dois exemplos com código:
-- https://www.exploit-db.com/exploits/46786
-- https://www.exploit-db.com/exploits/47924
+- Código: https://www.exploit-db.com/exploits/47924
+- item2
+- item3
 - item4
 
 ## Ataques
