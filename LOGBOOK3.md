@@ -10,8 +10,6 @@
 ## Catalogação
 
 - Autor: Jacob Baines - METASPLOIT
-- Data: 30/04/2019
-- Não foi encontrada informação sobre bug-bounties 
 - Severidade: 9.8/10 de acordo com NIST
 
 ## Exploit
