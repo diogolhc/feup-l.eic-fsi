@@ -2,9 +2,9 @@
 
 ## Identificação - CVE-2019-3929
 
-- Hello
-- OS Command Injection
+- A vulnerabilidade deve-se ao fraco tratamento de inputs aquando do parsing de *HTTP requests*
 - User não autenticado pode executar comandos do sistema operativo como root
+- Os dispositivos afetados tratam-se de *wireless presentation devices*, tais como o Crestron AM-100, mais concretamente na sua firmware.
 - Plataformas: The Crestron AM-100 firmware 1.6.0.2, Crestron AM-101 firmware 2.7.0.1, Barco wePresent WiPG-1000P firmware 2.3.0.10 etc.
 
 ## Catalogação
@@ -16,9 +16,9 @@
 
 ## Exploit
 
-- Código: https://www.exploit-db.com/exploits/47924
-- item2
-- item3
+- Dois exemplos com código:
+- https://www.exploit-db.com/exploits/46786
+- https://www.exploit-db.com/exploits/47924
 - item4
 
 ## Ataques
