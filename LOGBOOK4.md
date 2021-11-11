@@ -59,8 +59,8 @@ Por outro lado, se se usar os comandos *printenv X* ou *env | grep X*, é apenas
 
 Com o uso de *export*, conseguiu-se colocar uma nova variável de ambiente com o nome e valor à nossa escolha. Para a remover, bastou o uso de *unset*. Foi possível verificar estas alterações com os comandos anteriores.
 
-Tarefa 2 
-Não há diferença
+## Tarefa 2 
+Correndo o comando *diff*, não foram encontradas diferenças entre as variáveis de ambiente dos dois processos. Assim, pode concluir-se que as variáveis de ambiente são herdadas pelo processo filho do processo pai. 
 
 Tarefa3
 1. Nada é mostrado - variáveis de ambiente não passadas
