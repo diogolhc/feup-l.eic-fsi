@@ -70,11 +70,8 @@ Correndo o comando *diff*, não foram encontradas diferenças entre as variávei
 ## Tarefa 4
 De facto, comprova-se o que é dito no enunciado desta tarefa. As variáveis de ambiente são mostradas.
 
-Tarefa 5
-1 Escreveu variáveis
-2.Passos aceites
-3. Temos as novas variáveis lá
-Conseguimos mudar as envp do root
+## Tarefa 5
+As variáveis PATH e ANY_NAME encontavam-se presentes no proccesso filho SET-UID. Contudo, a variável LD_LIBRARY-PATH, não fazendo crer que nem todas as variáveis de ambiente foram herdadas da shell.
 
 Tarefa 6
 Conseguimos acesso root
