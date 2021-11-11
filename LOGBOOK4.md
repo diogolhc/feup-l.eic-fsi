@@ -67,8 +67,8 @@ Correndo o comando *diff*, não foram encontradas diferenças entre as variávei
 2. Desta vez, as variáveis de ambiente já são mostradas
 3. Pelos pontos 1 e 2, pode concluir-se que ocm a utilização de *execve*, o novo programa só terá as variáveis de ambiente que lhe forem passadas explícitamente.
 
-Tarefa 4
-Agora já aparece
+## Tarefa 4
+De facto, comprova-se o que é dito no enunciado desta tarefa. As variáveis de ambiente são mostradas.
 
 Tarefa 5
 1 Escreveu variáveis
