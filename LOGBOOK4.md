@@ -1,7 +1,8 @@
 # Trabalho realizado na Semana #4
 
-Tarefa1
-Ao correr print
+## Tarefa1
+Ao correr comando *printenv*, obteve-se o seguinte output.
+
 SHELL=/bin/bash
 SESSION_MANAGER=local/VM:@/tmp/.ICE-unix/2054,unix/VM:/tmp/.ICE-unix/2054
 QT_ACCESSIBILITY=1
@@ -50,6 +51,13 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/us
 GDMSESSION=ubuntu
 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
 _=/usr/bin/printenv
+
+Um resultado semelhante foi mostrado com env.
+Este comandos mostram as variáveis de ambiente presentes no sistema. 
+
+Por outro lado, se se usar os comandos *printenv X* ou *env | grep X*, é apenas mostrada a variável de ambiente X. No nosso caso, explorámos a variável *PWD*  
+
+Com o uso de *export*, conseguiu-se colocar uma nova variável de ambiente com o nome e valor à nossa escolha. Para a remover, bastou o uso de *unset*. Foi possível verificar estas alterações com os comandos anteriores.
 
 Tarefa 2 
 Não há diferença
