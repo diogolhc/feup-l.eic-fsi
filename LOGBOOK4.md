@@ -1,6 +1,6 @@
 # Trabalho realizado na Semana #4
 
-## Tarefa1
+## Tarefa 1
 Ao correr comando *printenv*, obteve-se o seguinte output.
 
 SHELL=/bin/bash
@@ -62,10 +62,10 @@ Com o uso de *export*, conseguiu-se colocar uma nova variável de ambiente com o
 ## Tarefa 2 
 Correndo o comando *diff*, não foram encontradas diferenças entre as variáveis de ambiente dos dois processos. Assim, pode concluir-se que as variáveis de ambiente são herdadas pelo processo filho do processo pai. 
 
-Tarefa3
-1. Nada é mostrado - variáveis de ambiente não passadas
-2. Variáveis de ambiente são mostradas
-3. Só tem as variáveis que lhe são passadas
+## Tarefa 3
+1. Nada é mostrado na consola
+2. Desta vez, as variáveis de ambiente já são mostradas
+3. Pelos pontos 1 e 2, pode concluir-se que ocm a utilização de *execve*, o novo programa só terá as variáveis de ambiente que lhe forem passadas explícitamente.
 
 Tarefa 4
 Agora já aparece
