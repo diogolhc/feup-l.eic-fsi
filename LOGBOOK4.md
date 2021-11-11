@@ -73,5 +73,5 @@ De facto, comprova-se o que é dito no enunciado desta tarefa. As variáveis de 
 ## Tarefa 5
 As variáveis PATH e ANY_NAME encontavam-se presentes no proccesso filho SET-UID. Contudo, a variável LD_LIBRARY-PATH, não fazendo crer que nem todas as variáveis de ambiente foram herdadas da shell.
 
-Tarefa 6
-Conseguimos acesso root
+## Tarefa 6
+É de facto perigoso o uso de programas *SET-UID*. Criou-se um programa chamado ls que colocava uma *string* no terminal. Para que este fosse corrido em vez do ls comum, bastou mudar o path para a pasta em que estava o programa e realizar os outros passos do guião. Alterando as *shell's* de acordo com o enunciado e mudando a chamada *system* para *system(/bin/zsh)* sendo o program *SET-UID* conseguimos à *shell* como *root*.
