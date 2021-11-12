@@ -56,9 +56,16 @@ _=/usr/bin/printenv
 Um resultado semelhante foi mostrado com env.
 Este comandos mostram as variáveis de ambiente presentes no sistema. 
 
-Por outro lado, se se usar os comandos *printenv X* ou *env | grep X*, 
+Por outro lado, usando os comandos
+```sh
+printenv X
+```
+ou 
+```sh
+env | grep X
+```
 é apenas mostrada a variável de ambiente X. No nosso caso, explorámos a 
-variável *PWD*  
+variável *PWD*.
 
 Com o uso de *export*, conseguiu-se colocar uma nova variável de ambiente 
 com o nome e valor à nossa escolha. Para a remover, bastou o uso de *unset*. 
