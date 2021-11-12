@@ -55,23 +55,51 @@ _=/usr/bin/printenv
 Um resultado semelhante foi mostrado com env.
 Este comandos mostram as variáveis de ambiente presentes no sistema. 
 
-Por outro lado, se se usar os comandos *printenv X* ou *env | grep X*, é apenas mostrada a variável de ambiente X. No nosso caso, explorámos a variável *PWD*  
+Por outro lado, se se usar os comandos *printenv X* ou *env | grep X*, 
+é apenas mostrada a variável de ambiente X. No nosso caso, explorámos a 
+variável *PWD*  
 
-Com o uso de *export*, conseguiu-se colocar uma nova variável de ambiente com o nome e valor à nossa escolha. Para a remover, bastou o uso de *unset*. Foi possível verificar estas alterações com os comandos anteriores.
+Com o uso de *export*, conseguiu-se colocar uma nova variável de ambiente 
+com o nome e valor à nossa escolha. Para a remover, bastou o uso de *unset*. 
+Foi possível verificar estas alterações com os comandos anteriores.
 
 ## Tarefa 2 
-Correndo o comando *diff*, não foram encontradas diferenças entre as variáveis de ambiente dos dois processos. Assim, pode concluir-se que as variáveis de ambiente são herdadas pelo processo filho do processo pai. 
+Correndo o comando *diff*, não foram encontradas diferenças entre as 
+variáveis de ambiente dos dois processos. Assim, pode concluir-se que 
+as variáveis de ambiente são herdadas pelo processo filho do processo pai. 
 
 ## Tarefa 3
 1. Nada é mostrado na consola
 2. Desta vez, as variáveis de ambiente já são mostradas
-3. Pelos pontos 1 e 2, pode concluir-se que ocm a utilização de *execve*, o novo programa só terá as variáveis de ambiente que lhe forem passadas explícitamente.
+3. Pelos pontos 1 e 2, pode concluir-se que com a utilização de *execve*, 
+o novo programa só terá as variáveis de ambiente que lhe forem passadas 
+explícitamente no 3º parâmetro.
 
 ## Tarefa 4
-De facto, comprova-se o que é dito no enunciado desta tarefa. As variáveis de ambiente são mostradas.
+De facto, comprova-se o que é dito no enunciado desta tarefa. As variáveis 
+de ambiente são herdadas e como tal são mostradas.
 
 ## Tarefa 5
-As variáveis PATH e ANY_NAME encontavam-se presentes no proccesso filho SET-UID. Contudo, a variável LD_LIBRARY-PATH, não fazendo crer que nem todas as variáveis de ambiente foram herdadas da shell.
+As variáveis PATH e ANY_NAME encontavam-se presentes no proccesso filho 
+SET-UID. Contudo, a variável LD_LIBRARY_PATH não, fazendo crer que 
+nem todas as variáveis de ambiente foram herdadas da shell.
 
 ## Tarefa 6
-É de facto perigoso o uso de programas *SET-UID*. Criou-se um programa chamado ls que colocava uma *string* no terminal. Para que este fosse corrido em vez do ls comum, bastou mudar o path para a pasta em que estava o programa e realizar os outros passos do guião. Alterando as *shell's* de acordo com o enunciado e mudando a chamada *system* para *system(/bin/zsh)* sendo o program *SET-UID* conseguimos à *shell* como *root*.
+É de facto perigoso o uso de programas *SET-UID*. Partindo do código vulnerável:
+```c
+int main() {  
+   system("ls");  
+   return 0;  
+}
+```
+Observamos que ele pretende utilizar o utilitário `/bin/ls`. Contudo, dado
+que foi dado o caminho absoluto ele vai utilizar o `PATH` para encontrar o programa.  
+Desta forma, e dado que `PATH` é uma variável de ambiente, fizemos exploit
+desta vulnerabilidade criando um programa com nome `ls` e acrescentando o
+diretório corrente ao início do `PATH`: `export PATH=.:$PATH`. Desta forma, quando `system("ls")`
+executou, ele não executou `/bin/ls` mas o programa que nós criamos. Assim,
+e uma vez que o programa vulnerável é *SET-UID*, tornou-se possível executar
+o programa criado por nós, enquanto users não *root*, e executá-lo como root.
+No nosso programa `ls` fizemos uma chamada de acesso à shell que nos permitiu
+ter acesso à shell como *root*, sendo que a partir daqui ganhámos controlo total
+da máquina.
