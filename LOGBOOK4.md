@@ -1,8 +1,8 @@
 # Trabalho realizado na Semana #4
 
 ## Tarefa 1
-Ao correr comando *printenv*, obteve-se o seguinte output.
-
+Ao correr comando *printenv*, obteve-se o seguinte output:
+```
 SHELL=/bin/bash
 SESSION_MANAGER=local/VM:@/tmp/.ICE-unix/2054,unix/VM:/tmp/.ICE-unix/2054
 QT_ACCESSIBILITY=1
@@ -51,6 +51,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/us
 GDMSESSION=ubuntu
 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
 _=/usr/bin/printenv
+```
 
 Um resultado semelhante foi mostrado com env.
 Este comandos mostram as variáveis de ambiente presentes no sistema. 
@@ -120,8 +121,8 @@ Quanto aos utilizadores, encontramos duas referências:
 - admin
 - Orval Sanford
 
-Estas informações foram obtidas navegando pelo site:
-![/imgs4/info.png](/imgs4/info.png)
+Estas informações foram obtidas navegando pelo site:  
+![/imgs4/info.png](/imgs4/info.png)  
 ![/imgs4/users.png](/imgs4/users.png)
 
 Partindo destas informações realizamos diversas pesquisas usando como *keywors*:
@@ -131,7 +132,7 @@ Após várias tentativas, com uma simples pesquisa no *google* por:
 ```
 Booster for WooCommerce plugin 5.4.3 cve
 ```
-Encontrámos os seguintes resultados:
+Encontrámos os seguintes resultados:  
 ![/imgs4/google.png](/imgs4/google.png)
 
 Abrimos o [3.º resultado](https://nvd.nist.gov/vuln/detail/CVE-2021-34646) e deparamo-nos com a seguinte descrição:
