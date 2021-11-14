@@ -91,6 +91,7 @@ de ambiente são herdadas e como tal são mostradas.
 As variáveis PATH e ANY_NAME encontavam-se presentes no proccesso filho 
 SET-UID. Contudo, a variável LD_LIBRARY_PATH não, fazendo crer que 
 nem todas as variáveis de ambiente foram herdadas da shell.
+Após alguma investigação, concluiu-se ser um mencanismo de segurança do *dynamic linker*. Esta variável de ambiente contém informação usada pelo *dynamic link loader* para saber onde procurar as bibliotecas dinâmicas partilhadas (o que pode ser uma potêncial arma pensado em *Return Oriented Programming*). Como o *user* dono do programa é diferente do que mudou esta variável na *shell*, esta alteração não se verifica.
 
 ## Tarefa 6
 É de facto perigoso o uso de programas *SET-UID*. Partindo do código vulnerável:
