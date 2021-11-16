@@ -118,11 +118,15 @@ Apenas no segundo caso, não é chamada a função *sleep* que costumizada. Como
 
 ## Tarefa 8
 ### Step 1
-É de facto possível colocar o programa a, por exemplo, remover um ficheiro. Como se usa *system* e não se faz o processamento do *input* para verificar se estamos na presença de um ficheiro, pode-se fornecer ao programa um comando seguido de ; e este será executado. Basta
+É de facto possível colocar o programa a, por exemplo, remover um ficheiro. Como se usa *system* e não se faz o processamento do *input* para verificar se estamos na presença de um ficheiro, pode-se fornecer ao programa um comando e este será executado. Basta
 ```sh
 catall catall.c;rm hello.txt
 ```
 e o programa, para além de mostrar o conteúdo de *catall.c* também irá remover *hello.txt*.
+### Step 2
+Neste caso, o ataque já falha. Tal deve-se ao facto de *execve* considerar todo o *input* como o nome do ficheiro evitando assim a execução do comando pretendido.
+
+##Tarefa 9 
 
 ## CTF
 
