@@ -116,6 +116,14 @@ da máquina.
 ## Tarefa 7
 Apenas no segundo caso, não é chamada a função *sleep* que costumizada. Como sugerido, criou-se uma experiência para descobrir a origem do problema mostrando as variável de ambiente *LD_PRELOAD* imediatamente antes de depois da chamada da função *sleep*. Verificou-se assim que, apenas neste caso, a variável não foi herdada. Tal tem uma explicação semelhante à dada na Tarefa 5 para a variável LD_LIBRARY_PATH.
 
+## Tarefa 8
+### Step 1
+É de facto possível colocar o programa a, por exemplo, remover um ficheiro. Como se usa *system* e não se faz o processamento do *input* para verificar se estamos na presença de um ficheiro, pode-se fornecer ao programa um comando seguido de ; e este será executado. Basta
+```sh
+catall catall.c;rm hello.txt
+```
+e o programa, para além de mostrar o conteúdo de *catall.c* também irá remover *hello.txt*.
+
 ## CTF
 
 Para realizar este CTF, começamos por fazer a investigação inicial que nos
