@@ -126,7 +126,8 @@ e o programa, para além de mostrar o conteúdo de *catall.c* também irá remov
 ### Step 2
 Neste caso, o ataque já falha. Tal deve-se ao facto de *execve* considerar todo o *input* como o nome do ficheiro evitando assim a execução do comando pretendido.
 
-##Tarefa 9 
+## Tarefa 9 
+Ao correr este programa, o *fd* não é fechado no fim e como tal, as permissões continuam lá. Basta, portanto, escrever para o *fd* mostrado depois de o executar e o ficheiro protegido aparece alterado.
 
 ## CTF
 
