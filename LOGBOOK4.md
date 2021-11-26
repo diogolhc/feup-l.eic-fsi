@@ -88,8 +88,8 @@ De facto, comprova-se o que é dito no enunciado desta tarefa. As variáveis
 de ambiente são herdadas e como tal são mostradas.
 
 ## Tarefa 5
-As variáveis PATH e ANY_NAME encontavam-se presentes no proccesso filho 
-SET-UID. Contudo, a variável LD_LIBRARY_PATH não, fazendo crer que 
+As variáveis *PATH* e *ANY_NAME* encontavam-se presentes no proccesso filho 
+SET-UID. Contudo, a variável *LD_LIBRARY_PATH* não, fazendo crer que 
 nem todas as variáveis de ambiente foram herdadas da shell.
 Após alguma investigação, concluiu-se ser um mencanismo de segurança do *dynamic linker*. Esta variável de ambiente contém informação usada pelo *dynamic link loader* para saber onde procurar as bibliotecas dinâmicas partilhadas (o que pode ser uma potêncial arma pensado em *Return Oriented Programming*). Como o *user* dono do programa é diferente do que mudou esta variável na *shell*, esta alteração não se verifica.
 
@@ -113,6 +113,21 @@ No nosso programa `ls` fizemos uma chamada de acesso à shell que nos permitiu
 ter acesso à shell como *root*, sendo que a partir daqui ganhámos controlo total
 da máquina.
 
+## Tarefa 7
+Apenas no segundo caso, não é chamada a função *sleep* que costumizada. Como sugerido, criou-se uma experiência para descobrir a origem do problema mostrando as variável de ambiente *LD_PRELOAD* imediatamente antes de depois da chamada da função *sleep*. Verificou-se assim que, apenas neste caso, a variável não foi herdada. Tal tem uma explicação semelhante à dada na Tarefa 5 para a variável LD_LIBRARY_PATH.
+
+## Tarefa 8
+### Step 1
+É de facto possível colocar o programa a, por exemplo, remover um ficheiro. Como se usa *system* e não se faz o processamento do *input* para verificar se estamos na presença de um ficheiro, pode-se fornecer ao programa um comando e este será executado. Basta
+```sh
+catall catall.c;rm hello.txt
+```
+e o programa, para além de mostrar o conteúdo de *catall.c* também irá remover *hello.txt*.
+### Step 2
+Neste caso, o ataque já falha. Tal deve-se ao facto de *execve* considerar todo o *input* como o nome do ficheiro evitando assim a execução do comando pretendido.
+
+## Tarefa 9 
+Ao correr este programa, o *fd* não é fechado no fim e como tal, as permissões continuam lá. Basta, portanto, escrever para o *fd* mostrado depois de o executar e o ficheiro protegido aparece alterado.
 
 ## CTF
 
