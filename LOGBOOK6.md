@@ -22,7 +22,7 @@ de forma a usar números que estão na *stack* como endereços de memória e ten
 à primeira tentativa, bastaria adicionar mais `%s` até um dos valores ser um endereço
 inválido.  
 
-*Program crash*:
+*Program crash*:  
 ![/imgs6/crash.png](/imgs6/crash.png)
 
 (Nota: não foi *printed* `(ˆ_ˆ)(ˆ_ˆ) Returned properly (ˆ_ˆ)(ˆ_ˆ)`, o que indica que
@@ -111,7 +111,7 @@ with open('badfile', 'wb') as f:
 
 De notar que estamos a guardar o endereço `0x080b4008` no início e após isso usámos
 o *format-specifier* `%64$s` de modo a dar print à *string* do suposto argumento 64 da 
-`printf()`. (64 foi o número encontrado na [Tarefa 2.A](#tarefa-2.a) e que, usado desta forma,
+`printf()`. (64 foi o número encontrado na [Tarefa 2.A](#tarefa-2a) e que, usado desta forma,
 faz com que seja usado o endereço dado nos primeiros 4 *bytes* do *input* como endereço da *string*
 que se pretende dar *print*)
 
@@ -183,7 +183,7 @@ with open('badfile', 'wb') as f:
     f.write(content)
 ```
 
-A única diferença relativamente ao *script* da [Tarefa 3.A](#tarefa-3.a) foi
+A única diferença relativamente ao *script* da [Tarefa 3.A](#tarefa-3a) foi
 a adição de `%20476x` antes do *format-specifier* que guarda a quantidade de caracteres
 aos quais se deu *print*, de modo a imprimir um suposto 1.º argumento do `printf()` em
 formato hexadecimal em `20476` caracteres com *leading spaces*.
