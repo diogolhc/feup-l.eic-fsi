@@ -51,7 +51,7 @@ Que tinha como objetivo apagar da tabela de credenciais a informação da Alice,
 
 ![/imgs8/query_failed.png](imgs8/query_failed.png)
 
-TODO falar sobre as possiveis defesas para este tipo de ataque.
+Não é possível injetar mais *SQL statements* graça à proteção conseguida através uso da extensão *mysqli* para *PHP*. *mysqli* oferece tanto *query()* como *multi_query()*, o primeiro por motivos de segurança apenas permite que a primeira query seja executada, já o segundo permite a execução de várias queries e é portanto menos seguro.
 
 
 ## Tarefa 3.1
@@ -63,7 +63,7 @@ alice' #
 ```
 ![/imgs8/alice_profile.png](/imgs8/alice_profile.png)
 
-Podemos agora editar o perfil da Alice. Fez-se uso do campo nickname para realizar o ataque, sendo este o input:
+Podemos agora editar o perfil da Alice. Fez-se uso do campo nickname para realizar o ataque, sendo este o input.
 
 ```
 ', salary=80000, nickname='
