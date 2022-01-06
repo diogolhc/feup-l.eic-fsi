@@ -11,16 +11,16 @@ select * from credential where Name='Alice';
 
 ## Tarefa 2.1
 
-O objetivo desta tarefa é fazer um ataque a uma web app que se encontra em www.seed-server.com através de SQL Injection. Ao entrar neste site deparamo-nos com um campo de input de username e de password. O objetivo é realizar o login com a conta de admin, da qual não se conhece a password. O campo password é protegido por hashing o que indica que a injeção deverá ser feita com no campo username. Dois inputs diferentes foram testados que resultaram no sucesso do login na conta de admin:
+O objetivo desta tarefa é fazer um ataque a uma web app que se encontra em www.seed-server.com através de SQL Injection. Ao entrar neste site deparamo-nos com um campo de input de username e de password. O objetivo é realizar o login com a conta de admin, da qual não se conhece a password. O campo password é protegido por hashing o que indica que a injeção deverá ser feita no campo username. Dois inputs diferentes foram testados que resultaram no sucesso do login na conta de admin:
 
 - admin'; #
 - admin' or ''='
 
 O primeiro faz uso de comentários para que a validação da password não seja feita e o segundo usa uma injeção de um or que faz com que a comparação dê sempre verdadeiro.
 
-![/imgs8/profile_login_1.png](/imgs8/profile_login_1.png)
-
 ![/imgs8/profile_login_2.png](/imgs8/profile_login_2.png)
+
+![/imgs8/profile_login_1.png](/imgs8/profile_login_1.png)
 
 Após o login como admin ser realizado com sucesso o que obtemos é uma tabela com informações sobre os utilizadores.
 
@@ -35,7 +35,7 @@ Para tal foi usado o comando:
 $ curl 'http://www.seed-server.com/unsafe_home.php?username=admin%27%3B+%23&Password=a' > test.html
 ```
 
-Ao abrir test.html, ficheiro para o qual foi passado o resultado do curl, obtem-se o seguinte.
+Ao abrir test.html, ficheiro para o qual foi passado o resultado do curl, obtem-se o seguinte:
 
 ![/imgs8/admin_local_html.png](/imgs8/admin_local_html.png)
 
@@ -43,7 +43,7 @@ Ao abrir test.html, ficheiro para o qual foi passado o resultado do curl, obtem-
 
 O objetivo era verificar que existe uma defesa que impede que uma query nova seja injetada através dos mesmos campos usados anteriormente. Para verificar tal foi usado o seguinte input:
 
-```
+```sql
 admin'; DELETE FROM credential WHERE name='Alice'; #
 ```
 
@@ -56,16 +56,16 @@ Não é possível injetar mais *SQL statements* graça à proteção conseguida 
 
 ## Tarefa 3.1
 
-Primeiro é necessário fazer login na conta da alice, tal foi conseguido com o seguinte input de username e uma password arbitrária.
+Primeiro é necessário fazer login na conta da alice, tal foi conseguido com uma password arbitrária e o seguinte input de username:
 
-```
+```sql
 alice' #
 ```
 ![/imgs8/alice_profile.png](/imgs8/alice_profile.png)
 
-Podemos agora editar o perfil da Alice. Fez-se uso do campo nickname para realizar o ataque, sendo este o input.
+Podemos agora editar o perfil da Alice. Fez-se uso do campo nickname para realizar o ataque, sendo este o input:
 
-```
+```sql
 ', salary=80000, nickname='
 ```
 
@@ -77,7 +77,7 @@ Ficando o perfil da Alice com os seguintes valores.
 
 Agora para alterar o salario temos  de 'alterar' o campo WHERE a query de SQL, sendo o input:
 
-```
+```sql
 ', salary=1 WHERE name='Boby'; #
 ```
 
@@ -105,7 +105,7 @@ $conn->query($sql);
 ```
 
 A password foi mudada para 'alicerocks' e o input do *Phone Number* foi:
-```
+```sql
 ' WHERE name='Boby'; #
 ```
 
@@ -130,7 +130,7 @@ Este método é muito semelhante ao que foi usado na tarefa 2.1, sendo a unica d
 
 ![/imgs8/ctf1_2.png](/imgs8/ctf1_2.png)
 
-Conseguimos assim aceder ao cofre e obter a flag
+Conseguimos assim aceder ao cofre e obter a flag:
 
 ```
 flag{3970fbb4af4d7e800b6104bb768fd072}
@@ -138,7 +138,7 @@ flag{3970fbb4af4d7e800b6104bb768fd072}
 
 ## Desafio 2
 
-As funcionalidades disponíveis ao utilizador sem estar autenticado são a de fazer login através de um formulário, obter um speed report da nossa rede atual e a possibilidade de fazer ping a um host
+As funcionalidades disponíveis ao utilizador sem estar autenticado são a de fazer login através de um formulário, obter um speed report da nossa rede atual e a possibilidade de fazer ping a um host.
 
 O formulário aparenta estar protegido e não parece ser provável que este revele uma vulnerabilidade que possa ser explorada.
 
@@ -168,7 +168,7 @@ O resultado que é esperado é que seja possível fazer ping ao localhost (127.0
 
 Conclui-se que é possível fazer a injeção de comandos de consola.
 
-Agora para tentar capturar a flag sabemos que precisamos chegar ao ficheiro flag.txt. O comando *cat* cancatena ficheiros e imprime-os no *stdout*.
+Agora para tentar capturar a flag sabemos que precisamos chegar ao ficheiro flag.txt. O comando *cat* concatena ficheiros e imprime-os no *stdout*.
 
 ```
 127.0.0.1; cat /flag.txt
