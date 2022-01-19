@@ -318,7 +318,7 @@ Modulus:
 
 ## Tarefa 2
 
-Usando este comandos, é possível gerar um pedido de certificado para o *server* pretendido, neste caso, www.fsi622021.com:
+Usando este comandos, é possível gerar um pedido de certificado para o *server* pretendido, neste caso, www.fsi622021.com :
 
 ```
 openssl req -newkey rsa:2048 -sha256 \
@@ -482,7 +482,7 @@ DNS:www.fsi622021A.com, \
 DNS:www.fsi622021B.com"
 ```
 
-No certificado surgiu então a menção a tal:
+No pedido do certificado surgiu então a menção a tal:
 
 ![/imgs11/alternativeNames.png](/imgs11/alternativeNames.png)
 
@@ -500,17 +500,51 @@ foi gerado o certificado com os nomes alternativos adicionados.
 
 ## Tarefa 4
 
+Tiveram de ser feitas mudanças ao *container* para conseguir lançar o servidor para www.fsi622021.com.
+
+O certificado da CA e o certificado e chave do servidor têm de ser colocados na pasta de certificados da imagem:
+![/imgs11/certs.png](/imgs11/certs.png)
+
+O *dockerfile* teve de ser alterado por forma a comtemplar o *site* pretendido (www.fsi622021.com) com os certificados escolhidos. Para facilitar, o nome do ficheiro .conf do apache foi mantido (apesar do seu conteúdo alterado): 
+![/imgs11/dockerfile.png](/imgs11/dockerfile.png)
+
+![/imgs11/apache_conf.png](/imgs11/apache_conf.png)
+
+Iniciando o servidor, conseguiu-se o acesso, contudo no *icon* de aloquete da página existe um aviso.
+
+![/imgs11/acesso.png](/imgs11/acesso.png)
+
+O problema surge do facto do *browser* não conhecer a CA gerada por nós. Para tal, é preciso que este a importe. Bastou ir a "about:preferences#privacy", importar o certificado dando autorixação de confiança explícitamente.
+Com esta correção, o aviso foi removido: 
+
+![/imgs11/acesso_correto.png](/imgs11/acesso_correto.png)
+
 ## Tarefa 5
+
+Executando os passos do guião tentando atacar o *Google* chegou-se a: 
+![/imgs11/google_1st.png](/imgs11/google_1st.png)
+
+O problema surge já que apenas se simula um ataque à DNS sem comprometer a CA. Como os certificados presentes não condizem com o domínio que queremos aceder, surge o problema de segurança. Para haver sucesso, é necessário conseguir um certificado para www.google.com e não para www.fsi622021.com.
 
 ## Tarefa 6
 
+Como explicado na tarefa 5, para se ser bem sucedido, é necessário gerar certificados para o *site* a comprometer. Tal é possível à custa da CA que foi criada por nós. Assim, basta gerar um pedido de certificação 
+
+```
 openssl req -newkey rsa:2048 -sha256 \
 -keyout server.key -out server.csr \
 -subj "/CN=www.google.com/O=google/C=PT" \
 -passout pass:dees
+```
+
+e finalmente gerar o certificado tal como na tarefa 3.
+
+Obtém-se finalmente 
+![/imgs11/google.png](/imgs11/google.png)
 
 
+Contudo, um aviso ainda é levantado:
 
+![/imgs11/warning.png](/imgs11/warning.png)
 
-
-
+O grupo de CA root é muito reduzido são fácil para a *Mozilla* verificar se a autoridade que emitiu o certificado é uma delas. Daí aparecer a mensagem. Tal serve também para se perceber quem responsabilizar em caso de problemas.
