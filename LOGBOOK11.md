@@ -514,7 +514,7 @@ Iniciando o servidor, conseguiu-se o acesso, contudo no *icon* de aloquete da p�
 
 ![/imgs11/acesso.png](/imgs11/acesso.png)
 
-O problema surge do facto do *browser* não conhecer a CA gerada por nós. Para tal, é preciso que este a importe. Bastou ir a "about:preferences#privacy", importar o certificado dando autorixação de confiança explícitamente.
+O problema surge do facto do *browser* não conhecer a CA gerada por nós. Para tal, é preciso que este a importe. Bastou ir a "about:preferences#privacy", importar o certificado dando autorização de confiança explícitamente.
 Com esta correção, o aviso foi removido: 
 
 ![/imgs11/acesso_correto.png](/imgs11/acesso_correto.png)
@@ -547,4 +547,4 @@ Contudo, um aviso ainda é levantado:
 
 ![/imgs11/warning.png](/imgs11/warning.png)
 
-O grupo de CA root é muito reduzido são fácil para a *Mozilla* verificar se a autoridade que emitiu o certificado é uma delas. Daí aparecer a mensagem. Tal serve também para se perceber quem responsabilizar em caso de problemas.
+O grupo de CA root é muito reduzido e por isso, é fácil para a *Mozilla* verificar se a autoridade que emitiu o certificado é uma delas. Daí aparecer a mensagem. Tal serve também para se perceber quem responsabilizar em caso de problemas.
