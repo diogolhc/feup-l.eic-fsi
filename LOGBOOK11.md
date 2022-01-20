@@ -495,6 +495,13 @@ openssl ca -config openssl.cnf -policy policy_anything \
 -in server.csr -out server.crt -batch \
 -cert ca.crt -keyfile ca.key
 ```
+
+e observando o certificado gerado com  
+
+```
+openssl x509 -in server.crt -text -noout
+```
+
 foi gerado o certificado com os nomes alternativos adicionados.
 ![/imgs11/certificate.png](/imgs11/certificate.png)
 
